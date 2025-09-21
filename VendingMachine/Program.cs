@@ -1,8 +1,11 @@
-﻿Dictionary<ushort, ushort> money = new Dictionary<ushort, ushort>(){
+﻿using System.ComponentModel.Design;
+
+Dictionary<ushort, ushort> money = new Dictionary<ushort, ushort>(){
     { 1, 10 },
     { 2, 10 },
     { 5, 10 },
     { 10, 10 },
+    { 50, 10 },
     { 100, 5 },
     { 200, 5 },
     { 500, 5 },
@@ -25,6 +28,24 @@ machine.PrintOptions();
 
 
 
+public class Admin
+{
+    private static Dictionary<string, string> _admins = new Dictionary<string, string>(){{"admin", "qwerty"}};
+
+    public void LogIn(string login, string password) {
+        if ((_admins.ContainsKey(login)) & (_admins[login] == password))
+        {
+            Console.WriteLine("Вам разрешено: \n\t 1. Добавление, изменение и удаление продуктов \n\t 2. Снятие и внесение средств");
+        }
+        else
+        {
+            Console.WriteLine("Неверный логин или пароль!");
+        }
+    }
+}
+
+
+
 public class Machine
 {
     private Dictionary<ushort, ushort> _money;  // номинал монеты/купюры и кол-во
@@ -39,13 +60,23 @@ public class Machine
     }
 
     public void PrintOptions() { 
-        Console.WriteLine("Выберите действие: \n\t 1. Приобрести товар \n\t 2. Добавить товар \n");
-        if (Console.ReadLine() == "1") {
+        Console.WriteLine("Выберите действие: \n\t 1. Приобрести товар \n\t 2. Добавить товар (+ денежные операции) \n");
+        string option = Console.ReadLine();
+        if (option == "1")
+        {
             PrintProductsList();
         }
-        else
+        else if (option == "2")
         {
-            Console.WriteLine("Функциональность добавится позже :)");
+            Console.Write("Введите логин: ");
+            string login = Console.ReadLine();
+            Console.Write("Введите пароль: ");
+            string password = Console.ReadLine();
+            Admin admin = new Admin();
+            admin.LogIn(login, password);
+        }
+        else {
+            Console.WriteLine("Идите на îsh kakhfê ai'd dur-rugnul");
         }
 
     }
@@ -84,20 +115,71 @@ public class Machine
             sum += Convert.ToUInt16(count * denomination);
             if (sum >= ammount) {
                 ushort change = Convert.ToUInt16(sum - ammount);
-                Console.WriteLine($"Средств достаточно, сдача {change} рублей.");
+                if (change > 0)
+                {
+                    Console.WriteLine($"Средств достаточно, сдача {change} рублей.");
+                    GiveChange(change);
+                }
+                else {
+                    Console.WriteLine($"Средств достаточно.");
+                }
+                
                 _money = added_money;
                 _products_info[id][1] -= 1;
                 break;
             }
         }
         if (sum < ammount) {
-            Console.WriteLine("Средств недостаточно.");
+            Console.WriteLine($"Недостаточно {ammount - sum} руб.");
+            foreach (ushort denomination in added_money.Keys) { 
+                ushort count = Convert.ToUInt16(added_money[denomination] - _money[denomination]);
+                if (count > 0) { 
+                    Console.WriteLine($"Возвращенные средства: {DeclineByCases(count, denomination)}");
+                }
+            }
         }
         
+    }
+    public static string DeclineByCases(ushort count, ushort denomination)
+    {
+        string word = (denomination < 50) ? "монет" : "купюр";
+        count %= 10;
+        if (count == 1)
+        {
+            word += "а";
+        }
+        else if (count < 5)
+        {
+            word += "ы";
+        }
+        
+        return $"{count} {word} по {denomination} рублей.";
+    }
+
+    public void GiveChange(ushort change) {
+        foreach (ushort denomination in _money.Keys.Reverse()) {
+            ushort count = 0;
+            while ((change >= denomination) & (_money[denomination] > 0))
+            {
+                count ++;
+                _money[denomination] -= 1;
+                change -= denomination;
+                if (change < denomination) {
+                    Console.WriteLine($"{DeclineByCases(count, denomination)}");         
+                    
+                }
+            }
+        }
+    
     }
 
 
 
-    
+
+
+
+
+
+
 
 }
