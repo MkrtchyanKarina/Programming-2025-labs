@@ -45,38 +45,51 @@ public class Admin
     private static Dictionary<string, string> _admins = new Dictionary<string, string>(){{"admin", "qwerty"}};
 
 
+
     public void LogIn(string login, string password) {
         if ((_admins.ContainsKey(login)) & (_admins[login] == password))
+
         {
-            Console.WriteLine("Вам разрешено: \n\t 1. Добавление, изменение и удаление продуктов \n\t 2. Снятие и внесение средств. Выберите категорию действий: ");
-            string answer = Console.ReadLine();
-            if (answer == "1")
-            {
-                ProductOperations();
-            }
-            else {
-                MoneyOperations();
-            }
+            PrintOpntionsList();
+
         }
         else
         {
             Console.WriteLine("Неверный логин или пароль!");
         }
     }
-    //public static void ContinueOperations()
-    //{
-    //    Console.WriteLine("Хотите продолжить? Д/н");
-    //    if (Console.ReadLine().ToLower() == "д")
-    //    {
-    //        Console.WriteLine("Остаться в режиме администратора? Д/н");
-    //        if (Console.ReadLine().ToLower() == "д") {
-    //            ProductOperations();
-    //        }
-    //        else {
-    //            Machine machine = new Machine(_money, _products, _products_info);
-    //        }
-    //    }
-    //}
+
+    public void PrintOpntionsList()
+    {
+        Console.WriteLine("Вам разрешено: \n\t 1. Добавление, изменение и удаление продуктов \n\t 2. Снятие и внесение средств. Выберите категорию действий: ");
+        string answer = Console.ReadLine();
+        if (answer == "1")
+        {
+            ProductOperations();
+        }
+        else
+        {
+            MoneyOperations();
+        }
+    }
+
+    public void ContinueOperations()
+    {
+        Console.WriteLine("Хотите продолжить? Д/н");
+        if (Console.ReadLine().ToLower() == "д")
+        {
+            Console.WriteLine("Остаться в режиме администратора? Д/н");
+            if (Console.ReadLine().ToLower() == "д")
+            {
+                PrintOpntionsList();
+            }
+            else
+            {
+                Machine machine = new Machine(_money, _products, _products_info);
+                machine.PrintOptions();
+            }
+        }
+    }
 
     public void ProductOperations()
     {
@@ -134,7 +147,7 @@ public class Admin
            
 
         }
-        //ContinueOperations();
+        ContinueOperations();
 
     }
     
@@ -165,7 +178,7 @@ public class Admin
             _money[denomination] -= Convert.ToUInt16(count);
         }
         
-        //ContinueOperations();
+        ContinueOperations();
     }
 }
 
@@ -242,11 +255,12 @@ public class Machine
                 ushort change = Convert.ToUInt16(sum - ammount);
                 if (change > 0)
                 {
-                    Console.WriteLine($"Средств достаточно, сдача {change} рублей.");
+                    Console.WriteLine($"Средств достаточно, сдача {change} рублей. Возьмите товар и сдачу :)");
                     GiveChange(change);
                 }
                 else {
-                    Console.WriteLine($"Средств достаточно.");
+                    Console.WriteLine($"Средств достаточно. Возьмите товар :)");
+                    
                 }
                 
                 _money = added_money;
@@ -262,10 +276,11 @@ public class Machine
                     Console.WriteLine($"Возвращенные средства: {DeclineByCases(count, denomination)}");
                 }
             }
-            //ContinueOperations();
+            
 
         }
-        
+        ContinueOperations();
+
     }
     public static string DeclineByCases(ushort count, ushort denomination)
     {
@@ -283,13 +298,15 @@ public class Machine
         return $"{count} {word} по {denomination} рублей.";
     }
 
-    //public static void ContinueOperations() {
-    //    Console.WriteLine("Хотите продолжить? Д/н");
-    //    if (Console.ReadLine().ToLower() == "д")
-    //    {
-    //        Console.WriteLine("Продолжение");
-    //    }
-    //}
+    public void ContinueOperations()
+    {
+        Console.WriteLine("Хотите продолжить? Д/н");
+        if (Console.ReadLine().ToLower() == "д")
+        {
+            Machine machine = new Machine(_money, _products, _products_info);
+            machine.PrintOptions();
+        }
+    }
 
     public void GiveChange(ushort change) {
         foreach (ushort denomination in _money.Keys.Reverse()) {
@@ -305,7 +322,7 @@ public class Machine
                 }
             }
         }
-        //ContinueOperations();
+        ContinueOperations();
 
 
     }
