@@ -9,7 +9,7 @@ namespace Courses
     internal class OnlineCourse : Course
     {
         protected string _link;
-        internal OnlineCourse(string name, string author, int teacher_id, string link) : base(name, author, teacher_id) { 
+        internal OnlineCourse(string name, string author, string link) : base(name, author) { 
             Link = link;
         }
 

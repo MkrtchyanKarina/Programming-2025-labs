@@ -8,23 +8,17 @@ namespace Courses
 {
     internal class Teacher : User
     {
-        protected List<int> _taught_courses_id;
-        internal Teacher(string name, string lastname, string phone, string email, List<int> taught_courses_id) : base(name, lastname, phone, email)
-        {
-            _taught_courses_id = taught_courses_id;
-        }
+        protected List<int> _taught_courses_id = new List<int> ();
+        internal Teacher(string name, string lastname, string phone, string email) : base(name, lastname, phone, email)  {  }
 
         internal void AddNewCourse(int new_course_id)
         {
             _taught_courses_id.Add(new_course_id);
         }
 
-        internal void GetAllCourses()
+        internal List<int> GetAllTeacherCourses()
         {
-            for (int i = 0; i < _taught_courses_id.Count; i++)
-            {
-                Console.WriteLine(_taught_courses_id[i]);
-            }
+            return _taught_courses_id;
         }
     }
 }

@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Using Include="Xunit" />
+    <ProjectReference Include="..\Courses\Courses.csproj" />
   </ItemGroup>
 
 </Project>

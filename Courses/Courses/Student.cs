@@ -8,22 +8,17 @@ namespace Courses
 {
     internal class Student : User
     {
-        protected List<int> _attended_courses_id;
-        internal Student(string name, string lastname, string phone, string email, List<int> attended_courses_id) : base(name, lastname, phone, email)
-        {
-            _attended_courses_id = attended_courses_id;
-        }
+        protected List<int> _attended_courses_id = new List<int> ();
+        internal Student(string name, string lastname, string phone, string email) : base(name, lastname, phone, email) {  }
 
-        internal void AddNewCourse(int new_course_id) {
+        internal void AddNewCourse(int new_course_id) 
+        {
             _attended_courses_id.Add(new_course_id);
         }
 
-        internal void GetAllCourses()
+        internal List<int> GetAllStudentCourses()
         {
-            for (int i = 0; i < _attended_courses_id.Count; i++)
-            {
-                Console.WriteLine(_attended_courses_id[i]);
-            }
+            return _attended_courses_id;
         }
     }
 }

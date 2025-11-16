@@ -12,12 +12,11 @@ namespace Courses
         protected List<int> _students_id = new List<int> { };
         protected string _name;
         protected string _author;
-        protected int _teacher_id;
+        protected int _teacher_id = 0;
 
-        protected Course(string name, string author, int teacher_id) {
+        protected Course(string name, string author) {
             Name = name;
             Author = author;
-            Teacher = teacher_id;
         }
 
         internal string Name
@@ -36,14 +35,15 @@ namespace Courses
             }
         }
 
-        internal int Teacher { 
-            get { return _teacher_id;  }
-            set 
+        internal int Teacher
+        {
+            get { return _teacher_id; }
+            set
             {
                 if (value > 0)
                 {
                     _teacher_id = value;
-                                   
+
                 }
                 else
                     Console.WriteLine("ID не может быть отрицательным");
@@ -70,13 +70,11 @@ namespace Courses
 
         internal void EnrollStudentOnCourse(int student_id) { 
             _students_id.Add(student_id);
-            Console.WriteLine("The student was successfully enrolled");
         }
 
-        internal void GetStudentsList() {
-            for (int i = 0; i < _students_id.Count; i++) {
-                Console.WriteLine(_students_id[i]);
-            }
+        internal List<int> GetStudentsList() 
+        {
+            return _students_id;
         }
 
         
