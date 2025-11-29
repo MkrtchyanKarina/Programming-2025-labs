@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace InventoryManagement
 {
-    internal class Item
+    internal abstract class Item
     {
         private string _name;
         private int _weight;
