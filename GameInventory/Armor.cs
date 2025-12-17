@@ -6,6 +6,18 @@ using System.Threading.Tasks;
 
 namespace GameInventory
 {
+    internal class Armor : Item
+    {
+        internal int Defense { get; set; }
+        internal int Durability { get; set; }
+
+        internal override void improvePlayerStats(Player player)
+        {
+            player.Health += this.Defense;
+            Console.WriteLine($"Здоровье игрока увеличено на {this.Defense}");
+        }
+    }
+
     // Изменено: Наследуемся от ItemBuilder<ArmorBuilder>
     internal class ArmorBuilder : ItemBuilder<ArmorBuilder>
     {
