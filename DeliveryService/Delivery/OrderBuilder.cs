@@ -1,7 +1,7 @@
 namespace delivery
 {
     // Интерфейс строителя
-    internal interface IOrderBuilder
+    public interface IOrderBuilder
     {
         void CreateOrder();
         void SetFastDelivery(bool fastDelivery);
@@ -10,12 +10,12 @@ namespace delivery
     }
 
     // Конкретный строитель
-    internal class OrderBuilder : IOrderBuilder
+    public class OrderBuilder : IOrderBuilder
     {
         private AbstractCuisineFactory _factory;
         private Order _order;
 
-        internal OrderBuilder(AbstractCuisineFactory factory)
+        public OrderBuilder(AbstractCuisineFactory factory)
         {
             _factory = factory;
         }
@@ -30,30 +30,30 @@ namespace delivery
     }
 
 
-    internal class Director
+    public class Director
     {
-        internal void CreateRegularOrder(IOrderBuilder builder)
+        public void CreateRegularOrder(IOrderBuilder builder)
         {
             builder.CreateOrder();
             builder.SetFastDelivery(false);
             builder.SetPersonalPreferences("");
         }
 
-        internal void CreateUrgentOrder(IOrderBuilder builder)
+        public void CreateUrgentOrder(IOrderBuilder builder)
         {
             builder.CreateOrder();
             builder.SetFastDelivery(true);
             builder.SetPersonalPreferences("");
         }
 
-        internal void CreateSpecialOrder(IOrderBuilder builder)
+        public void CreateSpecialOrder(IOrderBuilder builder)
         {
             builder.CreateOrder();
             builder.SetFastDelivery(false);
             builder.SetPersonalPreferences("Есть дополнительные пожелания к заказу!");
         }
 
-        internal void CreateSpecialUrgentOrder(IOrderBuilder builder)
+        public void CreateSpecialUrgentOrder(IOrderBuilder builder)
         {
             builder.CreateOrder();
             builder.SetFastDelivery(true);

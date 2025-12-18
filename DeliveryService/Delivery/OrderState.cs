@@ -1,13 +1,19 @@
 namespace delivery
 {
-    internal interface IOrderState
+    public interface IOrderState
     {
         void StartOrder(Order order);
         void FinishOrder(Order order);
+        void PrintOrderState();
     }
 
-    class AcceptedOrderState : IOrderState
+    public class AcceptedOrderState : IOrderState
     {
+        public void PrintOrderState()
+        {
+            Console.WriteLine("Заказ принят.");
+        }
+
         public void StartOrder(Order order)
         {
             Console.WriteLine("Приступили к Вашему заказу.");
@@ -20,8 +26,13 @@ namespace delivery
         }
     }
 
-    class InProgressOrderState : IOrderState
+    public class InProgressOrderState : IOrderState
     {
+        public void PrintOrderState()
+        {
+            Console.WriteLine("Заказ в процессе.");
+        }
+
         public void StartOrder(Order order)
         {
             Console.WriteLine("Продолжаем готовить Ваш заказ.");
@@ -34,8 +45,13 @@ namespace delivery
         }
     }
 
-    class ReadyOrderState : IOrderState
+    public class ReadyOrderState : IOrderState
     {
+        public void PrintOrderState()
+        {
+            Console.WriteLine("Заказ готов.");
+        }
+
         public void StartOrder(Order order)
         {
             Console.WriteLine("Ваш заказ готов!");
