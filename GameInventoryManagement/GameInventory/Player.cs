@@ -7,24 +7,24 @@ using System.Threading.Tasks;
 namespace GameInventory
 {
 
-    internal class Player
+    public class Player
     {
-        internal string Name { get; set; }
-        internal int Balance { get; set; }
+        public string Name { get; set; }
+        public int Balance { get; set; }
 
-        internal int Strength { get; set; }
-        internal int Intelligence { get; set; }
-        internal int Health { get; set; }
+        public int Strength { get; set; }
+        public int Intelligence { get; set; }
+        public int Health { get; set; }
 
-        internal List<Item> _items = new List<Item>();
-        internal List<Item> _chosenItems = new List<Item>();
+        public List<Item> _items = new List<Item>();
+        public List<Item> _chosenItems = new List<Item>();
 
-        internal void PrintPlayerInfo()
+        public void PrintPlayerInfo()
         {
             Console.WriteLine($"Имя:{Name} Баланс:{Balance} Сила:{Strength} Интеллект:{Intelligence} Здоровье:{Health}");
         }
 
-        internal void AddNewItem(Item item)
+        public void AddNewItem(Item item)
         {
             if (Balance - item.Cost >= 0)
             {
@@ -50,23 +50,23 @@ namespace GameInventory
             }
         }
 
-        internal void ChooseItem(Item item)
+        public void ChooseItem(Item item)
         {
             _chosenItems.Add(item);
         }
-        internal void UseChosenItem(Item item)
+        public void UseChosenItem(Item item)
         {
             item.Count -= 1;
             item.improvePlayerStats(this);
         }
-        internal void DeleteChosenItem(Item item)
+        public void DeleteChosenItem(Item item)
         {
             _chosenItems.Remove(item);
         }
 
 
 
-        internal void ShowAllItems()
+        public void ShowAllItems()
         {
             foreach (Item item in _items)
             {
@@ -74,7 +74,7 @@ namespace GameInventory
             }
         }
 
-        internal void ShowChosenItems()
+        public void ShowChosenItems()
         {
             foreach (Item item in _chosenItems)
             {

@@ -6,51 +6,51 @@ using System.Threading.Tasks;
 
 namespace GameInventory
 {
-    internal abstract class PlayerBuilder
+    public abstract class PlayerBuilder
     {
-        internal Player player = new Player();
+        public Player player = new Player();
 
-        internal PlayerBuilder SetName(string name)
+        public PlayerBuilder SetName(string name)
         {
             player.Name = name;
             return this;
         }
 
-        internal PlayerBuilder SetBalance(int balance)
+        public PlayerBuilder SetBalance(int balance)
         {
             player.Balance = balance;
             return this;
         }
 
-        internal PlayerBuilder SetStrength(int strenght)
+        public PlayerBuilder SetStrength(int strenght)
         {
             player.Strength = strenght;
             return this;
         }
 
-        internal PlayerBuilder SetIntelligence(int intelligence)
+        public PlayerBuilder SetIntelligence(int intelligence)
         {
             player.Intelligence = intelligence;
             return this;
         }
 
-        internal PlayerBuilder SetHealth(int health)
+        public PlayerBuilder SetHealth(int health)
         {
             player.Health = health;
             return this;
         }
 
-        internal void PrintPlayerInfo()
+        public void PrintPlayerInfo()
         {
             player.PrintPlayerInfo();
         }
 
-        internal abstract Player Build();
+        public abstract Player Build();
     }
 
-    internal class BasicPlayerBuilder : PlayerBuilder
+    public class BasicPlayerBuilder : PlayerBuilder
     {
-        internal BasicPlayerBuilder(string name)
+        public BasicPlayerBuilder(string name)
         {
             SetName(name);
             SetBalance(200);
@@ -59,16 +59,16 @@ namespace GameInventory
             SetHealth(0);
         }
 
-        internal override Player Build()
+        public override Player Build()
         {
             return player;
         }
 
     }
 
-    internal class ImprovedPlayerBuilder : PlayerBuilder
+    public class ImprovedPlayerBuilder : PlayerBuilder
     {
-        internal ImprovedPlayerBuilder(string name)
+        public ImprovedPlayerBuilder(string name)
         {
             SetName(name);
             SetBalance(500);
@@ -77,7 +77,7 @@ namespace GameInventory
             SetHealth(100);
         }
 
-        internal override Player Build()
+        public override Player Build()
         {
             return player;
         }
