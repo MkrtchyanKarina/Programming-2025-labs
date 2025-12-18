@@ -9,10 +9,12 @@ namespace delivery
 
         internal bool Urgency { get; set; }
         internal string PersonalPreferences { get; set; }
+        internal IOrderState State { get; set; } // order status: accepted, in progress, ready
 
         internal Order(AbstractCuisineFactory factory)
         {
             _factory = factory;
+            State = new AcceptedOrderState();
         }
 
         public void SelectMainCourse()
@@ -55,70 +57,16 @@ namespace delivery
 
             Console.WriteLine($"\nИтого к оплате: {total} руб.");
         }
-    }
 
-
-
-    // Интерфейс строителя
-    internal interface IOrderBuilder
-    {
-        void CreateOrder();
-        void SetFastDelivery(bool fastDelivery);
-        void SetPersonalPreferences(string personalPreferences);
-        Order GetOrder();
-    }
-
-    // Конкретный строитель
-    internal class OrderBuilder : IOrderBuilder
-    {
-        private AbstractCuisineFactory _factory; // Убрал internal и изменил доступ
-        private Order _order;
-
-        internal OrderBuilder(AbstractCuisineFactory factory)
+        internal void StartDoingOrder()
         {
-            _factory = factory;
+            State.StartOrder(this);
         }
 
-        public void CreateOrder()
+        internal void FinishDoingOrder()
         {
-            _order = new Order(_factory); // Используем фабрику для создания Order
+            State.FinishOrder(this);
         }
-        public void SetFastDelivery(bool urgency) => _order.Urgency = urgency;
-        public void SetPersonalPreferences(string personalPreferences) => _order.PersonalPreferences = personalPreferences;
-        public Order GetOrder() => _order;
-    }
-
-
-    internal class Director
-    {
-        internal void CreateRegularOrder(IOrderBuilder builder)
-        {
-            builder.CreateOrder();
-            builder.SetFastDelivery(false);
-            builder.SetPersonalPreferences("");
-        }
-
-        internal void CreateUrgentOrder(IOrderBuilder builder)
-        {
-            builder.CreateOrder();
-            builder.SetFastDelivery(true);
-            builder.SetPersonalPreferences("");
-        }
-
-        internal void CreateSpecialOrder(IOrderBuilder builder)
-        {
-            builder.CreateOrder();
-            builder.SetFastDelivery(false);
-            builder.SetPersonalPreferences("Есть дополнительные пожелания к заказу!");
-        }
-
-        internal void CreateSpecialUrgentOrder(IOrderBuilder builder)
-        {
-            builder.CreateOrder();
-            builder.SetFastDelivery(true);
-            builder.SetPersonalPreferences("Есть дополнительные пожелания к заказу!");
-        }
-
     }
 
 }

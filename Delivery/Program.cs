@@ -35,6 +35,8 @@ class Program
         Order special_order = builder.GetOrder();
         Console.WriteLine($"Характеристики заказа: срочность: {special_order.Urgency} | особенности: { special_order.PersonalPreferences}");
 
+        special_order.StartDoingOrder();
+        special_order.FinishDoingOrder();
 
         special_order.ShowOrder();
 

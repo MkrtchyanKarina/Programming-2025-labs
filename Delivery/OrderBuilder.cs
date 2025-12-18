@@ -1,0 +1,64 @@
+namespace delivery
+{
+    // Интерфейс строителя
+    internal interface IOrderBuilder
+    {
+        void CreateOrder();
+        void SetFastDelivery(bool fastDelivery);
+        void SetPersonalPreferences(string personalPreferences);
+        Order GetOrder();
+    }
+
+    // Конкретный строитель
+    internal class OrderBuilder : IOrderBuilder
+    {
+        private AbstractCuisineFactory _factory;
+        private Order _order;
+
+        internal OrderBuilder(AbstractCuisineFactory factory)
+        {
+            _factory = factory;
+        }
+
+        public void CreateOrder()
+        {
+            _order = new Order(_factory); // Используем фабрику для создания Order
+        }
+        public void SetFastDelivery(bool urgency) => _order.Urgency = urgency;
+        public void SetPersonalPreferences(string personalPreferences) => _order.PersonalPreferences = personalPreferences;
+        public Order GetOrder() => _order;
+    }
+
+
+    internal class Director
+    {
+        internal void CreateRegularOrder(IOrderBuilder builder)
+        {
+            builder.CreateOrder();
+            builder.SetFastDelivery(false);
+            builder.SetPersonalPreferences("");
+        }
+
+        internal void CreateUrgentOrder(IOrderBuilder builder)
+        {
+            builder.CreateOrder();
+            builder.SetFastDelivery(true);
+            builder.SetPersonalPreferences("");
+        }
+
+        internal void CreateSpecialOrder(IOrderBuilder builder)
+        {
+            builder.CreateOrder();
+            builder.SetFastDelivery(false);
+            builder.SetPersonalPreferences("Есть дополнительные пожелания к заказу!");
+        }
+
+        internal void CreateSpecialUrgentOrder(IOrderBuilder builder)
+        {
+            builder.CreateOrder();
+            builder.SetFastDelivery(true);
+            builder.SetPersonalPreferences("Есть дополнительные пожелания к заказу!");
+        }
+
+    }
+}
