@@ -2,12 +2,12 @@ namespace delivery
 {
     public abstract class AbstractCuisineFactory
     {
-        public abstract Dish CreateAppetizer();
-        public abstract Dish CreateMainCourse();
-        public abstract Dish CreateDessert();
+        public abstract Dish CreateAppetizer();  // метод добавления закуски
+        public abstract Dish CreateMainCourse();  // метод добавления основного блюда
+        public abstract Dish CreateDessert();  // метод добавления десерта
 
     }
-
+    // возвращаем классы-наследники (блюда из конкретной кухни/меню) от класса блюдо
     public class ItalianCuisineFactory : AbstractCuisineFactory
     {
         public override Dish CreateAppetizer()

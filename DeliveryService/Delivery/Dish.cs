@@ -31,42 +31,42 @@ namespace delivery
     }
 
 
-    public class ItalianAppetizer : Dish
+    public class ItalianAppetizer : Dish  // закуска итальянской кухни
     {
         public ItalianAppetizer() : base("Брускетта", DishType.Appetizer, 250, 150,
             "Хлеб, помидоры, базилик, чеснок") 
         { }
     }
 
-    public class ItalianMainCourse : Dish
+    public class ItalianMainCourse : Dish  // основное блюдо итальянской кухни
     {
         public ItalianMainCourse() : base("Паста Карбонара", DishType.MainCourse, 500, 350,
             "Спагетти, бекон, яйца, пармезан, перец") 
         { }
     }
 
-    public class ItalianDessert : Dish
+    public class ItalianDessert : Dish // десерт итальянской кухни
     {
         public ItalianDessert() : base("Тирамису", DishType.Dessert, 350, 200,
             "Печенье савоярди, маскарпоне, кофе, какао")
         { }
     }
 
-    public class ChineseAppetizer : Dish
+    public class ChineseAppetizer : Dish  // закуска китайской кухни
     {
         public ChineseAppetizer() : base("Вонтоны", DishType.Appetizer, 300, 200,
             "Тесто, свиной фарш, имбирь, соевый соус")
         { }
     }
 
-    public class ChineseMainCourse : Dish
+    public class ChineseMainCourse : Dish  // основное блюдо китайской кухни
     {
         public ChineseMainCourse() : base("Утка по-пекински", DishType.MainCourse, 800, 400,
             "Утка, мед, соевый соус, имбирь, лепешки")
         { }
     }
 
-    public class ChineseDessert : Dish
+    public class ChineseDessert : Dish  // десерт китайской кухни
     {
         public ChineseDessert() : base("Фрукты в сиропе", DishType.Dessert, 200, 150,
             "Ананас, личи, имбирный сироп")

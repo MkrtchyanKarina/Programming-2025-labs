@@ -3,30 +3,30 @@ namespace delivery
     public class Order
     {
         private AbstractCuisineFactory _factory;
-        private Dictionary<Dish, int> _selectedMainCourses = new Dictionary<Dish, int>();
-        private Dictionary<Dish, int> _selectedAppetizers = new Dictionary<Dish, int>();
-        private Dictionary<Dish, int> _selectedDesserts = new Dictionary<Dish, int>();
+        private Dictionary<Dish, int> _selectedMainCourses = new Dictionary<Dish, int>();  // выбранные основные блюда в заказе
+        private Dictionary<Dish, int> _selectedAppetizers = new Dictionary<Dish, int>();  //  выбранные закуски в заказе
+        private Dictionary<Dish, int> _selectedDesserts = new Dictionary<Dish, int>();  // выбранные десерты в заказе
 
         public bool Urgency { get; set; }
         public string PersonalPreferences { get; set; }
-        public IOrderState State { get; set; } // order status: accepted, in progress, ready
-        private IPricingStrategy _pricingStrategy;
+        public IOrderState State { get; set; } // статус заказа: accepted, in progress, ready
+        private IPricingStrategy _pricingStrategy;  // расчет стоимости заказа
 
-        public decimal TotalCost { get; set; } = 0.0m;
+        public decimal TotalCost { get; set; } = 0.0m;  // итоговая стоимость заказа
 
         public Order(AbstractCuisineFactory factory)
         {
-            _factory = factory;
-            State = new AcceptedOrderState();
-            _pricingStrategy = new StandardPricing();
+            _factory = factory;  // выбор кухни/меню
+            State = new AcceptedOrderState();  // статус заказа
+            _pricingStrategy = new StandardPricing();  // способ расчета стоимости
         }
 
-        public void ChangeCuisine(AbstractCuisineFactory newFactory)
+        public void ChangeCuisine(AbstractCuisineFactory newFactory)  // метод для смены меню
         {
             _factory = newFactory;
         }
 
-        public void SelectMainCourse()
+        public void SelectMainCourse() // добавление основного блюда из выбранной кухни
         {
             var mainCourse = _factory.CreateMainCourse();
             var existingDish = _selectedMainCourses.Keys.FirstOrDefault(d => d.Name == mainCourse.Name);
@@ -37,7 +37,7 @@ namespace delivery
                 _selectedMainCourses[mainCourse] = 1;
         }
 
-        public void SelectAppetizer()
+        public void SelectAppetizer() // добавление закуски из выбранной кухни
         {
             var appetizer = _factory.CreateAppetizer();
             var existingDish = _selectedAppetizers.Keys.FirstOrDefault(d => d.Name == appetizer.Name);
@@ -48,7 +48,7 @@ namespace delivery
                 _selectedAppetizers[appetizer] = 1;
         }
 
-        public void SelectDessert()
+        public void SelectDessert() // добавление десерта из выбранной кухни
         {
             var dessert = _factory.CreateDessert();
             var existingDish = _selectedDesserts.Keys.FirstOrDefault(d => d.Name == dessert.Name);
@@ -59,9 +59,9 @@ namespace delivery
                 _selectedDesserts[dessert] = 1;
         }
 
-        public void ShowOrder()
+        public void ShowOrder()  // вывод информации о выбранных блюдах
         {
-            Console.WriteLine("=== ВАШ ИНДИВИДУАЛЬНЫЙ ЗАКАЗ ===");
+            Console.WriteLine("Ваш заказ:");
             decimal total = 0;
 
             if (_selectedAppetizers.Any())
@@ -99,7 +99,7 @@ namespace delivery
             
         }
 
-        public decimal GetBaseCost()
+        public decimal GetBaseCost()  // расчет стоимости выбранных блюд
         {
             decimal total = 0;
 
@@ -115,26 +115,26 @@ namespace delivery
             return total;
         }
 
-        public void SetPricingStrategy(IPricingStrategy strategy)
+        public void SetPricingStrategy(IPricingStrategy strategy)  // изменение способа расчета финальной стоимости
         {
             _pricingStrategy = strategy;
         }
 
-        public decimal CalculateTotalPrice()
+        public decimal CalculateTotalPrice()  // расчет финальной стоимости
         {
             TotalCost = _pricingStrategy.CalculatePrice(this);
             return TotalCost;
         }
 
-        public void ShowOrderWithTotal()
+        public void ShowOrderWithTotal()  // вывод финальной стоимости 
         {
             ShowOrder();
             decimal total = CalculateTotalPrice();
             Console.WriteLine($"\n{_pricingStrategy.GetDescription()}");
-            Console.WriteLine($"ИТОГО: {total:F2} руб.");
+            Console.WriteLine($"Итого: {total:F2} руб.");
         }
 
-
+        // методы для изменения статуса заказа
 
         public void StartDoingOrder()
         {

@@ -7,7 +7,7 @@ namespace delivery
         void PrintOrderState();
     }
 
-    public class AcceptedOrderState : IOrderState
+    public class AcceptedOrderState : IOrderState  // принятый заказ
     {
         public void PrintOrderState()
         {
@@ -26,7 +26,7 @@ namespace delivery
         }
     }
 
-    public class InProgressOrderState : IOrderState
+    public class InProgressOrderState : IOrderState  // заказ в процессе
     {
         public void PrintOrderState()
         {
@@ -45,7 +45,7 @@ namespace delivery
         }
     }
 
-    public class ReadyOrderState : IOrderState
+    public class ReadyOrderState : IOrderState  // готовый заказ
     {
         public void PrintOrderState()
         {

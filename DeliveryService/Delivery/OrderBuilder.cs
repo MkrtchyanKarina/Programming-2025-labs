@@ -22,8 +22,9 @@ namespace delivery
 
         public void CreateOrder()
         {
-            _order = new Order(_factory); // Используем фабрику для создания Order
+            _order = new Order(_factory); // Используем фабрику для создания экземпляра заказа
         }
+        // с помощью этих методов устанавливаем значения для полей экземпляра заказа
         public void SetFastDelivery(bool urgency) => _order.Urgency = urgency;
         public void SetPersonalPreferences(string personalPreferences) => _order.PersonalPreferences = personalPreferences;
         public Order GetOrder() => _order;
@@ -32,28 +33,28 @@ namespace delivery
 
     public class Director
     {
-        public void CreateRegularOrder(IOrderBuilder builder)
+        public void CreateRegularOrder(IOrderBuilder builder)  // метод для создания обычного заказа
         {
             builder.CreateOrder();
             builder.SetFastDelivery(false);
             builder.SetPersonalPreferences("");
         }
 
-        public void CreateUrgentOrder(IOrderBuilder builder)
+        public void CreateUrgentOrder(IOrderBuilder builder)  // метод для создания срочного заказа
         {
             builder.CreateOrder();
             builder.SetFastDelivery(true);
             builder.SetPersonalPreferences("");
         }
 
-        public void CreateSpecialOrder(IOrderBuilder builder)
+        public void CreateSpecialOrder(IOrderBuilder builder)  // метод для создания особенного заказа
         {
             builder.CreateOrder();
             builder.SetFastDelivery(false);
             builder.SetPersonalPreferences("Есть дополнительные пожелания к заказу!");
         }
 
-        public void CreateSpecialUrgentOrder(IOrderBuilder builder)
+        public void CreateSpecialUrgentOrder(IOrderBuilder builder)  // метод для создания особенного срочного заказа
         {
             builder.CreateOrder();
             builder.SetFastDelivery(true);

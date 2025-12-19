@@ -8,20 +8,24 @@ namespace delivery
     }
 
     // Конкретные стратегии
-    public class StandardPricing : IPricingStrategy
+
+    public class StandardPricing : IPricingStrategy // расчет для обычного заказа
     {
         public decimal CalculatePrice(Order order)
         {
-            decimal baseCost = order.GetBaseCost();
-            decimal tax = baseCost * 0.13m;
-            decimal delivery = baseCost < 1000 ? 300 : 200;
-            return baseCost + tax + delivery;
+            decimal baseCost = order.GetBaseCost();  // получаем стоимость блюд
+            decimal tax = baseCost * 0.13m;  // считаем налог
+            decimal delivery = baseCost < 1000 ? 300 : 200;  // считаем стоимоть доставки в зависимости от стоимости заказа
+            return baseCost + tax + delivery;  // финальный результат
         }
-
-        public string GetDescription() => "Стандартный расчет (налог 13% + доставка)";
+        public string GetDescription()
+        {
+            return "Стандартный расчет (налог 13% + доставка)";
+        }
     }
 
-    public class DiscountPricing : IPricingStrategy
+
+    public class DiscountPricing : IPricingStrategy  // расчет для заказа со скидкой
     {
         private readonly decimal _discountPercent;
 
@@ -40,10 +44,14 @@ namespace delivery
             return afterDiscount + tax + delivery;
         }
 
-        public string GetDescription() => $"Расчет со скидкой {_discountPercent}%";
+        public string GetDescription()
+        {
+            return $"Расчет со скидкой {_discountPercent}%";
+        }
     }
 
-    public class UrgentPricing : IPricingStrategy
+
+    public class UrgentPricing : IPricingStrategy  // расчет для срочного заказа (выше стоимоть доставки)
     {
         public decimal CalculatePrice(Order order)
         {
@@ -56,7 +64,8 @@ namespace delivery
         public string GetDescription() => "Срочный заказ (доставка 500 руб.)";
     }
 
-    public class CombinedPricing : IPricingStrategy
+
+    public class CombinedPricing : IPricingStrategy  // срочность и скидка
     {
         private readonly bool _isUrgent;
         private readonly decimal _discountPercent;
@@ -71,18 +80,15 @@ namespace delivery
         {
             decimal baseCost = order.GetBaseCost();
 
-            // Применяем скидку
+            // применяем скидку
             decimal afterDiscount = baseCost;
             if (_discountPercent > 0)
             {
                 afterDiscount = baseCost * (1 - (_discountPercent / 100));
             }
 
-            // Применяем налог
-            decimal withTax = afterDiscount * 1.13m;
-
-            // Применяем доставку
-            decimal delivery = _isUrgent ? 500 : (withTax < 1000 ? 300 : 200);
+            decimal withTax = afterDiscount * 1.13m;  // стоимость с налогом            
+            decimal delivery = _isUrgent ? 500 : (withTax < 1000 ? 300 : 200);  // считаем стоимость доставки
 
             return withTax + delivery;
         }
